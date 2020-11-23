@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Melbourne House Price Prediction</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
+
+</head>
+<body>
+<div class="img"></div>
+
+<div style="flex-grow: 1"><div class="dropdown">
+  <button class="dropbtn">Menu</button>
+  <div class="dropdown-content">
+    <a href="/second">Price Prediction</a>
+    <a href="/third">Task Distribution</a>
+  </div>
+</div>
+</div>
+<div class="flex-container">
+<div style="flex-grow: 1">
+</div>
+</div>
+<div style="flex-grow: 1">
+    <h1 align="center">Original CSV FILE</h1>
+</div>
+<div style="flex-grow: 1">
+
+    <p align="center">    <img src="/static/first.png" alt="Team_image" align="center" height="400px" width="70%"></p>
+</div>
+
+<div style="flex-grow: 1">
+    <h1 align="center">The IPYNB File</h1>
+</div>
+<div style="flex-grow: 1">
+  <p align="center">  <iframe src="http://localhost:8080/fourth" name="iframe_a" height="600px" width="70%" align="center" title="W3Schools Free Online Web Tutorials">
+  </iframe></p>
+
+</div>
+<div style="flex-grow: 1">
+    <h1 align="center">The CSV FILE AFTER PREPROCESSING</h1>
+</div>
+<div style="flex-grow: 1">
+    <p align="center">    <img src="/static/second.png" alt="Team_image" align="center" height="400px" width="70%"></p>
+</div>
+<div class="flex-container">
+<div style="flex-grow: 1">
+</div>
+</div>
+</body>
+</html>
