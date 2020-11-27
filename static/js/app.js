@@ -1,4 +1,4 @@
-function BathroomVal() {
+function Bathroom() {
   var uiBathrooms = document.getElementsByName("uiBathrooms");
   for(var i in uiBathrooms) {
     if(uiBathrooms[i].checked) {
@@ -8,18 +8,17 @@ function BathroomVal() {
   return -1; // Invalid Value
 }
 
-function CarVal() {
+function Garage() {
   var uiCar = document.getElementsByName("uiCar");
   for(var i in uiCar) {
     if(uiCar[i].checked) {
-    debugger;
         return parseInt(i);
     }
   }
   return -1; // Invalid Value
 }
 
-function BedroomVal() {
+function Bedroom() {
   var uiBHK = document.getElementsByName("uiBedroom");
   for(var i in uiBHK) {
     if(uiBHK[i].checked) {
@@ -29,18 +28,17 @@ function BedroomVal() {
   return -1; // Invalid Value
 }
 
-function onClickedEstimatePrice() {
-  console.log("Estimate price button clicked");
-  var bhk = BedroomVal();
-  var bathrooms = BathroomVal();
-  var Car =CarVal();
+function onClickEstimatePrice() {
+  console.log("Clicked Estimate Price: Button");
+  var bhk = Bedroom();
+  var bathrooms = Bathroom();
+  var Car =Garage();
   var sqm = document.getElementById("uiSqm");
   var location = document.getElementById("uiLocations");
   var estPrice = document.getElementById("uiEstimatedPrice");
 
 
-  debugger;
-  var url = window.document.location.origin +"/predict_house_price";
+  var url = window.document.location.origin +"/price";
   $.post(url, {
       bedroom2: bhk,
       bathroom: bathrooms,
@@ -48,25 +46,24 @@ function onClickedEstimatePrice() {
       buildingarea: parseFloat(sqm.value),
       suburbs: location.value
   },function(data, status) {
-      console.log(data.estimated_price);
-      estPrice.innerHTML = "<h2>" +"$"+ data.estimated_price.toString();
+      console.log(data.suburb_price);
+      estPrice.innerHTML = "<h2>" +"$"+ data.suburb_price.toString();
       console.log(status);
   });
 }
 
 function onPageLoad() {
-  console.log( "document loaded" );
-    debugger;
+  console.log( "Information Uploaded" );
 
-var url = window.document.location.origin + "/get_location_names";
+var url = window.document.location.origin + "/suburbs";
   $.get(url,function(data, status) {
-      console.log("got response for get_location_names request");
+      console.log("Suburbs Information Received");
       if(data) {
-          var locations = data.locations;
+          var sub = data.sub;
           var uiLocations = document.getElementById("uiLocations");
           $('#uiLocations').empty();
-          for(var i in locations) {
-              var opt = new Option(locations[i]);
+          for(var i in sub) {
+              var opt = new Option(sub[i]);
               $('#uiLocations').append(opt);
           }
       }
