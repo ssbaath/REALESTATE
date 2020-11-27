@@ -19,18 +19,8 @@ def third():
 def fourth():
     return render_template("ipynb.html")
 
-
-@app.route('/get_location_names', methods= ['GET'])
-def get_location_names():
-    response = jsonify({
-        'locations': abby.get_location_names()
-    })
-    response.headers.add('Access-Control-Allow-Origin', '*')
-
-    return response
-
-@app.route('/predict_house_price', methods= ['GET','POST'])
-def predict_house_price():
+@app.route('/price', methods= ['GET','POST'])
+def price_prediction():
 
     suburbs = request.form['suburbs']
     bedroom2 = int(request.form['bedroom2'])
@@ -39,14 +29,25 @@ def predict_house_price():
     buildingarea = float(request.form['buildingarea'])
 
 
-    response = jsonify({
-        'estimated_price': abby.price_estimate(suburbs, bedroom2, bathroom, car, buildingarea)
+    input = jsonify({
+        'suburb_price': abby.price(suburbs, bedroom2, bathroom, car, buildingarea)
     })
-    response.headers.add('Access-Control-Allow-Origin', '*')
+    input.headers.add('Access', '*')
 
-    return response
+    return input
+
+@app.route('/suburbs', methods= ['GET'])
+def suburbs():
+    input = jsonify({
+        'sub': abby.suburbs()
+    })
+    input.headers.add('Access', '*')
+
+    return input
+
+
 
 if __name__ == "__main__":
-    abby.load_saved_artifcats()
+    abby.savedvals()
     app.run(debug=True, host='0.0.0.0', port=8080)
 
