@@ -2,48 +2,47 @@ import json
 import numpy as np
 import pickle
 
+def savedvals():
+    global data
+    global sub
+    global ml_model
 
-__locations = None
-__data_columns = None
-__model = None
 
-def price_estimate(suburbs,bedroom2,bathroom,car,buildingarea):
+    with open("./model/columns.json", "r") as f:
+        data = json.load(f)['data']
+        sub = data[4:]
+
+    with open("./model/PriceNEW.pickle", "rb") as f:
+        ml_model = pickle.load(f)
+
+
+def price(suburbs,bedroom2,bathroom,car,buildingarea):
     try:
-        loc_index = __data_columns.index(suburbs.lower())
-    except:
-        loc_index = -1
+        ptr = data.index(suburbs)
 
-    a = np.zeros(len(__data_columns))
+    except:
+        ptr = -1
+
+    a = np.zeros(len(data))
     a[0] = bedroom2
     a[1] = bathroom
     a[2] = car
     a[3] = buildingarea
-    if loc_index >= 0:
-        a[loc_index] = 1
+    if ptr >= 0:
+        a[ptr] = 1
 
-    return round(__model.predict([a])[0], 3)
-
-def get_location_names():
-    return __locations
-
-def load_saved_artifcats():
-    print("loading saved artifacts...start")
-    global __data_columns
-    global __model
-    global __locations
+    return round(ml_model.predict([a])[0], 3)
 
 
-    with open("./model/columns.json", "r") as f:
-        __data_columns = json.load(f)['data_columns']
-        __locations = __data_columns[4:]
+def suburbs():
+    return sub
 
-    with open("./model/HousingPrice.pickle", "rb") as f:
-        __model = pickle.load(f)
-        print("loading saved artifacts...done")
+
+
 
 if __name__ == "__main__":
-    load_saved_artifcats()
-    print(get_location_names())
-    print(price_estimate('abbotsford',2, 1,0,79))
+    savedvals()
+    print(suburbs())
+    print(price('abbotsford',2, 1,0,79))
 
 
